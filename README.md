@@ -33,7 +33,7 @@ mvn clean install mvn spring-boot:run
 
 #### Package de l'application
 controller: API REST
-pojo: entité
+pojo: entité (pojo Message: colonne user_id à mettre en nullable = false après en production)
 repository = couche interaction avec la base de données
 service = logique métier
 
