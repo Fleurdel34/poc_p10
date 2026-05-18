@@ -1,7 +1,20 @@
-<Form>
-    <div class="mb-3">
-        <label for="content">Message</label>
-        <textarea id="content" formControlName="content"></textarea>
+<Form [formGroup]="messageForm">
+    <div class="form">
+        <label for="content" class="label">Message</label>
+        <textarea id="content" formControlName="content" rows="10" cols="10"></textarea>
     </div>
-    <button type="submit">Submit</button>
+    <button type="submit" (click)="onSubmit()" class="submit">Submit</button>
 </Form>
+
+@if (messages$ | async; as messages) {
+    @for (message of messages; track message.id) {
+        <div class="content">
+            <p>{{ message.content }}</p>
+        </div>
+        @if (message.response != null) {
+            <div class="response">
+                <p>{{ message.response }}</p>
+            </div>
+        }
+    }    
+}

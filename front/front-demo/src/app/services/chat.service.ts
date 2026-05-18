@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs/internal/Observable';
+ import { Observable, map } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { Message } from '../chat/model/message.model';
 
@@ -18,7 +18,9 @@ export class ChatService {
         return this.http.post<void>(`${this.pathApi}/message`, formValue);
     }
 
-    public getAllMessages(): Observable<{messages: Message[]}> {
-        return this.http.get<{messages: Message[]}>(`${this.pathApi}/message`);
+    public getAllMessages(): Observable<Message[]> {
+        return this.http.get<{messages: Message[]}>(`${this.pathApi}/message`).pipe(
+            map(response => response.messages)
+        );
     }
 }
