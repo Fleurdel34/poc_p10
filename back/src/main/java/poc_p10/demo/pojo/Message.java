@@ -26,7 +26,7 @@ public class Message {
     @Column(nullable = false)
     private String content;
 
-    @Column(nullable = false)
+    @Column
     private String response;
 
     @Column(nullable = true)
