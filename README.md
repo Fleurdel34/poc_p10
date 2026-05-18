@@ -37,3 +37,28 @@ pojo: entité (pojo Message: colonne user_id à mettre en nullable = false aprè
 repository = couche interaction avec la base de données
 service = logique métier
 
+## front-end[demo]
+Installer Node et npm :  télécharger et installer la version LTS de Node sur https://nodejs.org/fr/
+Node.js           : 20.19.6
+
+Commande pour mettre à jour npm: npm install -g npm@11.14.1
+Package Manager   : npm 11.14.1
+
+### Débuter le projet front
+Installez le CLI d'Angular: npm i -g @angular/cli
+Angular CLI       : 21.2.11
+
+#### Commande pour générer le projet
+ng new front-demo --style=scss
+
+#### Commande pour générer un component 
+ng generate component nom_du_composant
+
+#### Lancer le serveur 
+
+Commande  `ng serve` 
+Navigation:  `http://localhost:4200/`. The application est automatiquement relancer si vous changez du code dans les fichiers sources.
+
+### Build
+
+Commande `ng build` pour construire le projet.
