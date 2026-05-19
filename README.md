@@ -11,7 +11,6 @@ org.projectlombok: lombok
 #### Base de données en local:
 org.mariadb.jdbc: mariadb-java-client uniquement pour le PoC en local
 
-
 #### Base de données en production:
 org.postgresql: postgresql 
 
@@ -33,7 +32,7 @@ mvn clean install mvn spring-boot:run
 
 #### Package de l'application
 controller: API REST
-pojo: entité (pojo Message: colonne user_id à mettre en nullable = false après en production)
+pojo: entité (pojo Message: colonne user_id à mettre en nullable = false en production)
 repository = couche interaction avec la base de données
 service = logique métier
 
@@ -70,4 +69,5 @@ environments.prod.ts pour la production.
 
 #### package
 components: création des composants de l'application
+models: type de données (user_id enlever la mention null en production)
 services: intéraction avec l'API REST du backend end
