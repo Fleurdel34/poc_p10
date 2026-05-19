@@ -3,7 +3,7 @@ import { Message } from '../model/message.model';
 import { FormGroup, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ChatService } from '../../services/chat.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -19,7 +19,7 @@ private formBuilder = inject(FormBuilder);
 private destroyRef = inject(DestroyRef);
 private chatService = inject(ChatService);
 
-public messages$: Observable<Message[]> = this.chatService.getAllMessages();
+public messages$ = new BehaviorSubject<Message[]>([]);
 messageForm !: FormGroup;
 messages: any;
 
@@ -27,6 +27,19 @@ messages: any;
   ngOnInit() :void{
     this.messageForm = this.formBuilder.group({
       content: [null, [Validators.required]]
+    });
+
+    this.chatService.getAllMessages()
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe(messages => this.messages$.next(messages));
+
+    this.chatService.streamMessages()
+    .pipe(takeUntilDestroyed(this.destroyRef))
+    .subscribe(message => {
+      const currentMessages = this.messages$.value;
+      if (!currentMessages.find(m => m.id === message.id)) {
+          this.messages$.next([...currentMessages, message]);
+        }
     });
   }
 

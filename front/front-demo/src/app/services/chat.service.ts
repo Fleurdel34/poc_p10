@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
- import { Observable, map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { Message } from '../chat/model/message.model';
 
@@ -23,4 +23,16 @@ export class ChatService {
             map(response => response.messages)
         );
     }
+
+    public streamMessages(): Observable<Message> {
+        return new Observable<Message>(observer => {
+        const eventSource = new EventSource(`${this.pathApi}/message/stream`);
+
+        eventSource.onmessage = event => observer.next(JSON.parse(event.data));
+        eventSource.onerror = () => eventSource.close();
+
+        return () => eventSource.close();
+    });
+}
+
 }
