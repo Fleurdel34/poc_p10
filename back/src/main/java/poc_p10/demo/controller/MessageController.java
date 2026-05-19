@@ -5,10 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import poc_p10.demo.pojo.Message;
 import poc_p10.demo.service.MessageService;
 
+
 import java.util.Map;
+
+/**
+ * Create class MessageController
+ * Use the property MessageService
+ */
 
 @AllArgsConstructor
 @RestController
@@ -31,5 +38,10 @@ public class MessageController {
     public ResponseEntity<Map<String, Object>> getAllMessages() {
         Map<String, Object> messages = this.messageService.findAll();
         return new ResponseEntity<>(messages, HttpStatus.OK);
+    }
+
+    @GetMapping("/stream")
+    public SseEmitter stream() {
+        return messageService.connect();
     }
 }
